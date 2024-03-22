@@ -1,0 +1,75 @@
+# CD-ITX Cluster Install - override.yaml
+# Date:       Thu Jun 22 00:43:28 UTC 2023
+# Release:    cditx
+# NameSpace:  connectdirect
+
+license: true
+# Specify the license edition as per license agreement. Valid value is prod or non-prod for Production and 
+# Non-production respectively. Remember that this parameter is crucial for IBM Licensing and Metering Service
+licenseType: 'prod'
+
+# Specify the respective Docker Image details for IBMCCS
+image:
+  imageSecrets: 'ibm-entitlement-key'
+
+# Specify these fields to provide config values for C:D application  
+cdArgs:
+  # Specify the certificate name to be used for Secure+ configuration
+  crtName: 'privkey.pem'
+
+# Specify these fields for C:D admin user cduser
+cduser:
+  # Specify this to set a UID for the cduser. This is also equivalent to runAsUser security context.
+  uid: 1000
+  # Specify this to set a GID for the cduser. This is also equivalent to runAsGroup security context.
+  gid: 1000
+
+storageSecurity:
+  fsGroup: 1000
+  supplementalGroups: [5555]
+
+# persistence section specifies persistence settings which apply to the whole chart
+persistence:
+  # enabled is whether to use Persistent Volumes or not
+  enabled: true
+  # useDynamicProvisioning is whether or not to use Storage Classes to dynamically create Persistent Volumes 
+  useDynamicProvisioning: false
+
+# Specify these fields for Persistence Volume Claim details
+pvClaim:
+  # Specify the existing PV claim name to be used for deployment
+  existingClaimName: 'connectdirect-cditxpvc'
+  # Specify this to use any Storage Class for PVC
+  storageClassName: 'ibmc-file-gold'
+  accessMode: 'ReadWriteOnce'
+  selector:
+    # Specify this to use selector label name for PV-PVC bind
+    label: ''
+    # Specify this to use selector label value for PV-PVC bind
+    value: ''
+  size: 20Gi
+
+# Specify the Secret configuration for C:D
+secret:
+  # Secret name for configuring passwords for C:D
+  secretName: 'cd-password-secrets'
+  # Secret name of secure plus certificates and LDAP certificates, only needed if Dyanamic Provisioining is Enabled
+  certSecretName: "cd-cert-secrets"
+
+# Specify the service account details
+serviceAccount:
+  # Set this field to 'true' to create service account or 'false' to use existing service account
+  create: false
+  # Specify the name of service account to be used 
+  name: 'connectdirect-cd-itx'
+
+# liveness and Probeness details for the health of pods
+livenessProbe:
+  initialDelaySeconds: 240
+  timeoutSeconds: 60
+  periodSeconds: 240
+
+readinessProbe:
+  initialDelaySeconds: 240
+  timeoutSeconds: 60
+  periodSeconds: 240

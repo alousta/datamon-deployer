@@ -1,0 +1,20 @@
+- name: build-image
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+        - name: IMAGE
+          value: registry.ocp4.example.com:8443/developer/$(params.IMAGE_NAME):latest
+        - name: DOCKERFILE
+          value: Containerfile
+        - name: CONTEXT
+          value: $(params.APP_PATH)
+        - name: TLSVERIFY
+          value: "false"
+        - name: SKIP_PUSH
+          value: "true"
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: source
+          workspace: shared

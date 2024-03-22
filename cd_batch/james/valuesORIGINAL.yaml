@@ -1,0 +1,39 @@
+USER-SUPPLIED VALUES:
+cdArgs:
+  crtName: privkey.pem
+cduser:
+  gid: 1000
+  uid: 1000
+image:
+  imageSecrets: ibm-entitlement-key
+license: true
+licenseType: prod
+livenessProbe:
+  initialDelaySeconds: 240
+  periodSeconds: 240
+  timeoutSeconds: 60
+persistence:
+  enabled: true
+  useDynamicProvisioning: false
+pvClaim:
+  accessMode: ReadWriteOnce
+  existingClaimName: zero100-cditxpvc
+  selector:
+    label: ""
+    value: ""
+  size: 20Gi
+  storageClassName: ibmc-file-gold
+readinessProbe:
+  initialDelaySeconds: 240
+  periodSeconds: 240
+  timeoutSeconds: 60
+secret:
+  certSecretName: cd-cert-secrets
+  secretName: cd-password-secrets
+serviceAccount:
+  create: false
+  name: zero100-cd-itx
+storageSecurity:
+  fsGroup: 1000
+  supplementalGroups:
+  - 5555

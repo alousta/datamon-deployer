@@ -1,0 +1,9 @@
+export INSTALL_BASE_DIR=`pwd`
+export AdminEmailAddress='james.myers@ibm.com'
+export ReleaseName='cditxr1'
+export NameSpace='slew01'
+export IngSub='itzroks-666000jumw-i1l0od-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud'
+export EntitlementKeyFileName=${INSTALL_BASE_DIR}/CD-ITX-Autoinstall-Scripts/tools/entitlement/ibm-entitlement-key.txt
+export CDHelmChartName='ibm-connect-direct-1.2.6'
+export ITXHelmChartName='itx-rs-prod-2.0.0'
+

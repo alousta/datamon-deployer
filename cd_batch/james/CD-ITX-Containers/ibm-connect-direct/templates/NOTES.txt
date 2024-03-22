@@ -1,0 +1,16 @@
+Please wait while IBM Connect Direct Unix application is getting deployed. This may take 2-3 minutes to complete the deployment.
+
+See the product documentation for more details.
+https://www.ibm.com/docs/en/connect-direct/6.3.0
+
+Post helm installation steps.
+
+1. Wait for the pod to become ready. You can keep track of the pods either through the dashboard or through the command line interface: 
+	kubectl get pods -l release={{ .Release.Name }} -n {{ .Release.Namespace }} -o wide
+
+   From the output of above command, verify the STATUS as "Running".
+
+2. To view the service and ports exposed in pod.
+	kubectl get svc -l release={{ .Release.Name }} -n {{ .Release.Namespace }} -o wide
+ 
+3. Refer this link for more information on post installation - https://www.ibm.com/docs/en/connect-direct/6.3.0?topic=software-post-installation-tasks

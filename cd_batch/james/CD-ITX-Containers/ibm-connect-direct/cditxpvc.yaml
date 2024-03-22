@@ -1,0 +1,17 @@
+# CD-ITX PVC Deployment File - cditxpvc.yaml
+# Date:       Thu Jun 22 00:41:49 UTC 2023
+# NameSpace:  connectdirect
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: connectdirect-cditxpvc
+spec:
+ accessModes:
+   - ReadWriteOnce
+ persistentVolumeReclaimPolicy: "Delete"
+ resources:
+   requests:
+     storage: 20Gi
+ storageClassName: "ibmc-file-gold"

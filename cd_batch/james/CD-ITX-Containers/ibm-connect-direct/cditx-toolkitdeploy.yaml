@@ -1,0 +1,39 @@
+# B2Bi-SFG PV/PVC Deployment File - cditx-toolkitdeploy.yaml
+# Date:       Thu Jun 22 00:43:17 UTC 2023
+# NameSpace:  connectdirect
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connectdirect-cditxpvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connectdirect-cditxpvc
+  template:
+    metadata:
+      labels:
+        app: connectdirect-cditxpvc
+    spec:
+#      serviceAccount: connectdirect-cditxpvc
+      containers:
+      - name: connectdirect-cditxpvc
+        image: ghcr.io/icechasm/cditxsc:latest
+        command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+        volumeMounts:
+        - mountPath: /connect
+          name: volume
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: connectdirect-cditxpvc
+      initContainers:
+      - name: permissionsfix
+        image: alpine:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - chown 1000:1000 /mount;
+        volumeMounts:
+        - name: volume
+          mountPath: /mount
